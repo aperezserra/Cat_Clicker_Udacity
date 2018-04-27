@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html>
+<header>
+    <title>'Cat Clicker'</title>
+    <link rel="stylesheet" href="./css/style.css">
+</header>
+
+<body>
+
+    <h1>This is APS's cat clicker v3.0</h1>
+    <h4>In this case MVC Achitecture is beign used</h4>
+
+    <div class="cats_container">
+
+        <div id="cat_list_div">
+            <ul id="cat_list"></ul>
+        </div>
+
+        <div id ="cat_picture_div"></div>
+
+    </div>
+
+<!--   This is the html templates area -->
+
+    <!--   Cat list template -->
+    <script type="text/template" data-template="cat_list_item">
+        <li class="catclick" data-id="{{Cat_Id}}">{{Cat_Name}}</li>
+    </script>
+    <!--   END of Cat list template -->
+
+    <!--   Cat picture template -->
+    <script type="text/template" data-template="cat_picture_item">
+        <p id="catname">{{Cat_Name}}</p>
+
+        <picture><img id="mycat" src="{{Cat_Img_Path}}" alt="This is a little cat"></picture>
+
+        <div>
+            <p class="datatext">Number of clicks: <span class="clicksnumber">{{Cat_Clicks}}</span></p>
+        </div>
+    </script>
+    <!--   END of Cat picture template -->
+
+<!--   END of the html templates area -->
+
+    <script src="./js/script.js"></script> 
+</body>
+</html>

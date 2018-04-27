@@ -1,0 +1,59 @@
+#cat_list_div {
+    float: left;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+#cat_picture_div {
+    float: left;
+    font-size: 2em;
+    margin-left: 8%;
+}
+
+#catname {
+    display: block;
+    float: left;
+    font-weight: bold;
+}
+
+.cats_container {
+    margin-left: 3%;
+    margin-right: 3%;
+    margin-top: 5%;
+}
+
+.catclick {
+    cursor: pointer;
+}
+
+.clicksnumber {
+    color: red;
+}
+
+.datatext {
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+picture {
+    display: block;
+}
+
+h1, h4 {
+    text-align: center;
+}
+
+img:hover {
+    transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+}
+img {
+    box-shadow: 5px 3px 10px black;
+    transition: transform 0.2s;
+    -webkit-transition: -webkit-transform 0.2s;
+    -moz-transition: -moz-transform 0.2s;
+    -o-transition: -o-transform 0.2s;
+}
