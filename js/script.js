@@ -28,7 +28,9 @@
              },
          ],
 
-         active_cat: "",
+         active_cat: null,
+
+         admin_view_active: false,
     };
 
 
@@ -42,10 +44,15 @@
             return data.active_cat;
         },
 
+        getAdminViewStatus: function() {
+            return data.admin_view_active;
+        },
+
         increaseCatClicks: function() {
             let activeCat = this.getActiveCat();
             activeCat.clicks_amount += 1;
             cat_view.render();
+            admin_view.render();
         },
 
         setActiveCat: function(ctl_cat_id) {
@@ -58,10 +65,27 @@
             }
         },
 
+        setAdminViewStatus: function(status) {
+            //The status variable should be given as true or false to set the form to visible or not.
+            data.admin_view_active = status;
+        },
+
+        toggleAdminFormView: function() {
+            if (data.admin_view_active === false) {
+                data.admin_view_active = true;
+                admin_view.render();
+            }
+            else {
+                data.admin_view_active = false;
+                admin_view.render();
+            }
+        },
+
         init: function() {
             this.setActiveCat(1);
             list_view.init();
             cat_view.init();
+            admin_view.init();
         },
     };
 
@@ -97,7 +121,9 @@
                 catListElement.addEventListener('click', (function(cat_id) {
                     return function() {
                         control.setActiveCat(cat_id + 1);
+                        control.setAdminViewStatus(false);
                         cat_view.render();
+                        admin_view.render();
                         };
                     })(i));
             }
@@ -127,6 +153,61 @@
             thisTemplate = thisTemplate.replace(/{{Cat_Clicks}}/g, activeCat.clicks_amount);
 
             catPictureElement.innerHTML = thisTemplate;
+        },
+    };
+
+
+    var admin_view = {
+        init: function() {
+            // Getting Buttons from the DOM to attach event listeners to them.
+            this.adminBtn = document.querySelector('button[name="admin_btn"]');
+            this.cancelBtn = document.querySelector('button[name="cancel_btn"]');
+            this.saveBtn = document.querySelector('button[name="save_btn"]');
+
+            //Adding event listeners to the DOM buttons selected.
+            let adminBtn = this.adminBtn;
+            adminBtn.addEventListener('click', function(){
+                control.toggleAdminFormView();
+            });
+
+            let cancelBtn = this.cancelBtn;
+            cancelBtn.addEventListener('click', function(){
+                control.toggleAdminFormView();
+            });
+
+            let saveBtn = this.saveBtn;
+
+            this.render();
+        },
+        render: function() {
+            // Getting the Admin Form status (visible or not) to render it or not.
+            let adminViewStatus = control.getAdminViewStatus();
+            // Getting DOM Elements to modify
+            let adminForm = document.getElementById('cat_admin_hid_div');
+            let inputCats = document.getElementsByTagName('input');
+            let inputCatName = document.getElementById('form_cat_name');
+            let inputCatPath = document.getElementById('form_cat_path');
+            let inputCatClicks = document.getElementById('form_cat_clicks');
+            // Getting the active cat.
+            let activeCat = control.getActiveCat();
+
+            // Setting placeholder attributes to the current cat attributes
+            inputCatName.placeholder = activeCat.cat_name;
+            inputCatPath.placeholder = activeCat.cat_path;
+            inputCatClicks.placeholder = activeCat.clicks_amount;
+
+            // Clearing out the input value for every input field in the admin form.
+            for(let i = 0; i < inputCats.length; i++) {
+                inputCats[i].value = "";
+                }
+
+
+            if (adminViewStatus) {
+                adminForm.style.display = "";
+                }
+            else {
+                adminForm.style.display = "none";
+                }
         },
     };
 
