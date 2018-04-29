@@ -31,6 +31,7 @@
          active_cat: null,
 
          admin_view_active: false,
+
     };
 
 
@@ -68,6 +69,25 @@
         setAdminViewStatus: function(status) {
             //The status variable should be given as true or false to set the form to visible or not.
             data.admin_view_active = status;
+        },
+
+        setActiveCatData: function() {
+            // Obtaining the Active Cat object to modify it according to the form data.
+            let inputCatName = document.getElementById('form_cat_name');
+            let inputCatPath = document.getElementById('form_cat_path');
+            let inputCatClicks = document.getElementById('form_cat_clicks');
+            // Obtaining the active cat.
+            let activeCat = this.getActiveCat();
+
+            // Setting active cat values if the ones in the inputs are not empty.
+            if (inputCatName.value !== "") {activeCat.cat_name = inputCatName.value;}
+            if (inputCatPath.value !== "") {activeCat.cat_path = inputCatPath.value;}
+            if (inputCatClicks.value !== "") {activeCat.clicks_amount = parseInt(inputCatClicks.value);}
+
+            // Refreshing and hiding the associated views.
+            this.toggleAdminFormView();
+            cat_view.render();
+            admin_view.render();
         },
 
         toggleAdminFormView: function() {
@@ -176,7 +196,9 @@
             });
 
             let saveBtn = this.saveBtn;
-
+            saveBtn.addEventListener('click', function(){
+                control.setActiveCatData();
+            })
             this.render();
         },
         render: function() {
